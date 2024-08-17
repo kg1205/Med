@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Test Results</title>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <h1><a href="{{ url_for('index') }}" class="header-link">MediTimes</a></h1>
+        </div>
+    </header>
+    <div class="results-container">
+        {% if show_results %}
+        <div class="submitted-data">
+            <h2>Test Details</h2>
+            <div class="data-item">
+                <span class="label">Test Category:</span>
+                <span class="value">{{ test_category }}</span>
+            </div>
+            <div class="data-item">
+                <span class="label">Diagnostic Test:</span>
+                <span class="value">{{ diagnostic_test }}</span>
+            </div>
+            <div class="data-item">
+                <span class="label">Specimen Type:</span>
+                <span class="value">{{ specimen_type }}</span>
+            </div>
+            <div class="data-item">
+                <span class="label">Equipment Used:</span>
+                <span class="value">{{ equipment_used }}</span>
+            </div>
+            <div class="data-item">
+                <span class="label">Sample Collection:</span>
+                <span class="value">{{ sample_collection }}</span>
+            </div>
+        </div>
+        {% endif %}
+        <button id="backButton" class="back-button">Back</button>
+    </div>
+
+    <script>
+        // Handle back button click
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = "{{ url_for('Tests_And_Scanes') }}";
+        });
+    </script>
+</body>
+</html>

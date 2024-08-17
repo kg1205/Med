@@ -1,0 +1,160 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f9fc;
+    color: #333;
+}
+
+.header {
+    background-color: #007bff;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.header-link {
+    color: white;
+    text-decoration: none;
+}
+
+.medicine-data-container {
+    width: 100%;
+    max-width: 900px; /* Increase the max-width to make better use of space */
+    margin: 20px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-container, .results-container {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f0f6f7;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px; /* Adjusted for better spacing */
+}
+
+.form-group select {
+    width: 80%; /* Increase width of the dropdown */
+    padding: 14px; /* Larger padding for a bigger size */
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem; /* Slightly larger font */
+    transition: border-color 0.3s ease;
+}
+
+.form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.form-group input {
+    width: 60%; /* Reduced width for the diagnostic test search */
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+body {
+    background-color: #f4f4f4; /* Light background for a clean look */
+    font-family: Arial, sans-serif; /* Simple, clean font */
+}
+
+.form-container {
+    background-color: #fff; /* White background for the form */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 600px;
+    margin: 50px auto; /* Center the form on the page */
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width for a clean look */
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+
+.results-container {
+    padding: 45px;
+    background: linear-gradient(135deg, #1dc8ce 10%, #3b3bac 100%);
+    border-radius: 35px;
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.submitted-data h2 {
+    font-size: 45px;
+    margin-bottom: 25px;
+    color: #271582;
+}
+
+.submitted-data .data-item {
+    margin-bottom: 13px;
+    color: #fefffffe;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.submitted-data .label {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.submitted-data .value {
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: #1c1717;
+    line-height: 1.4; /* Adjust this value as needed to increase the space between lines */
+}
+.back-button{
+    background-color: #bca24c;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width for a clean look */
+}
+.back-button:hover {
+    background-color: #0056b3;
+}
+

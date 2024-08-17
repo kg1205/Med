@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors Availability</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+
+        .header {
+    background-color: #007bff;
+    padding: 20px;
+    color: white;
+    text-align: left;
+    padding-right: 200px;
+}
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .header-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .form-container {
+    max-width: 650px;
+    margin: 20px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 40px; /* Reduced from 75px to 40px */
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f0f6f7;
+}
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .form-group select, .form-group input {
+            width: 80%;
+            padding: 14px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus, .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .results-container {
+            padding: 45px;
+            background: linear-gradient(135deg, #1dc8ce 10%, #3b3bac 100%);
+            border-radius: 35px;
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .submitted-data h2 {
+            font-size: 45px;
+            margin-bottom: 25px;
+            color: #271582;
+        }
+
+        .submitted-data .data-item {
+            margin-bottom: 13px;
+            color: #fefffffe;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .submitted-data .label {
+            display: block;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .submitted-data .value {
+            font-size: 20px;
+            margin-bottom: 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #1c1717;
+            line-height: 1.4;
+        }
+
+      
+
+        .back-button {
+            position: relative;
+            top: 50px;
+            left: 650px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+}
+
+.back-button:hover {
+    background-color: #3a5a9c;
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><a href="{{ url_for('index') }}" class="header-link">MediTimes</a></h1>
+    </div>
+    <div class="form-container">
+        <a href="{{ url_for('index') }}" class="back-button">Back to Dashboard</a>
+    </div>
+
+    <div class="form-container">
+        <h2>Doctors Availability</h2>
+        <form action="{{ url_for('doctor_results') }}" method="GET">
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <select id="location" name="location" style="width: 100%;" required>
+                    <option value="">Select a location</option>
+                    {% for location in locations %}
+                    <option value="{{ location }}">{{ location }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="hospital">Hospital:</label>
+                <select id="hospital" name="hospital" style="width: 100%;">
+                    <option value="">Select a hospital</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+
+    {% if error %}
+    <div class="form-container">
+        <p style="color: red;">{{ error }}</p>
+    </div>
+    {% endif %}
+
+    
+
+    <script>
+        $(document).ready(function() {
+            $('#location').select2({
+                placeholder: "Select a location",
+                allowClear: true
+            });
+
+            $('#hospital').select2({
+                placeholder: "Select a hospital",
+                allowClear: true
+            });
+
+            $('#location').change(function() {
+                var location = $(this).val();
+                if (location) {
+                    $.getJSON('/get_hospitals/' + location, function(data) {
+                        var hospital_select = $('#hospital');
+                        hospital_select.empty();
+                        hospital_select.append('<option value="">Select a hospital</option>');
+                        $.each(data.hospitals, function(index, value) {
+                            hospital_select.append('<option value="' + value + '">' + value + '</option>');
+                        });
+                        hospital_select.trigger('change');
+                    });
+                } else {
+                    $('#hospital').empty().append('<option value="">Select a hospital</option>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

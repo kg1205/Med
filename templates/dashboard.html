@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* CSS Styles */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f6f7;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .dashboard-header {
+            margin: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+          
+            background-color: #c0d76bab;
+            color: rgb(61, 196, 99);
+            padding: 10px;
+            text-align: left;
+            text-transform: uppercase;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: bolder;
+            font-style: italic;
+           
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #4A90E2;
+            color: white;
+            padding: 15px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            background-color: #3A7BBF;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #336FA0;
+        }
+
+        .content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Charts container */
+        .charts-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between rows of charts */
+        }
+
+        /* First row of charts */
+        .chart-row {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 20px; /* Space between charts in the same row */
+        }
+
+        .chart-wrapper {
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .first-chart {
+            width: 60%; /* Adjust size for the first chart */
+            height: 400px; /* Height to maintain aspect ratio */
+        }
+
+        .second-chart {
+            width: 35%; /* Slightly smaller size for the second chart */
+            height: 380px; /* Height to maintain aspect ratio */
+        }
+
+        /* Third chart styling */
+        .third-chart {
+            width: 75%; /* Adjust size for the third chart */
+            height: 350px; /* Height to maintain aspect ratio */
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>MediTimes</h1>
+        </header>
+        <div class="content-wrapper">
+            <nav class="sidebar">
+                <ul>
+                    <li><a href="{{ url_for('medicine_data') }}">Medicine Data</a></li>
+                    <li><a href="{{ url_for('Tests_And_Scanes') }}">Tests And Scanes</a></li>
+                    <li><a href="{{ url_for('doctors_availability') }}">Doctors Availability</a></li>
+                    <li><a href="{{ url_for('prescription') }}">Prescription</a></li>
+                    <li><a href="{{ url_for('diet_control') }}">Diet Control</a></li>
+                    <li><a href="{{ url_for('fee_structure') }}">Fee Structure</a></li>
+                </ul>
+            </nav>
+            <main class="content">
+                <h2>Welcome to the Dashboard</h2>
+                <div class="charts-container">
+                    <div class="chart-row">
+                        <div class="chart-wrapper first-chart">
+                            <canvas id="userChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper second-chart">
+                            <canvas id="satisfactionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper third-chart">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        // User Data Chart
+        const userCtx = document.getElementById('userChart').getContext('2d');
+        const userChart = new Chart(userCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Users',
+                    data: [30, 50, 40, 60, 70, 80, 100],
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Satisfaction Chart
+        const satisfactionCtx = document.getElementById('satisfactionChart').getContext('2d');
+        const satisfactionChart = new Chart(satisfactionCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Satisfied', 'Neutral', 'Dissatisfied'],
+                datasets: [{
+                    label: 'Satisfaction',
+                    data: [80, 15, 5],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(255, 99, 132, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Growth Chart
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        const growthChart = new Chart(growthCtx, {
+            type: 'line',
+            data: {
+                labels: ['2019', '2020', '2021', '2022', '2023'],
+                datasets: [{
+                    label: 'User Growth',
+                    data: [100, 200, 300, 400, 500],
+                    backgroundColor: 'rgba(153, 102, 255, 0.7)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

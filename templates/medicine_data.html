@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Medicine Data</title>
+    <style>
+        .back-button {
+            position: relative;
+            top: 50px;
+            left: 650px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <h1><a href="{{ url_for('index') }}" class="header-link">MediTimes</a></h1>
+        </div>
+        <a href="{{ url_for('index') }}" class="back-button">Back to Dashboard</a>
+    </header>
+    <div class="medicine-data-container">
+        {% if show_results %}
+        <div class="results-container">
+            <div class="submitted-data">
+                <h2>Submitted Data</h2>
+                <div class="data-item">
+                    <span class="label">Medicine Name:</span>
+                    <span class="value">{{ medicine['name'] }}</span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Dosage:</span>
+                    <span class="value">{{ dosage }}</span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Instructions:</span>
+                    <span class="value">{{ instructions }}</span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Time Of Acceptance:</span>
+                    <span class="value">{{ time }}</span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Uses:</span>
+                    <span class="value">{{ uses }}</span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Common Side Effects:</span>
+                    <span class="value">{{ commonsideeffects }}</span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Rare Side Effects:</span>
+                    <span class="value">{{ raresideeffects }}</span>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="form-container">
+            <form action="{{ url_for('medicine_data') }}" method="POST">
+                <div class="form-group">
+                    <label for="option">Select a medicine:</label>
+                    <input list="medicines" id="option" name="option" class="dropdown-text">
+                    <datalist id="medicines">
+                        {% for med in medicines %}
+                        <option value="{{ med }}">
+                        {% endfor %}
+                    </datalist>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

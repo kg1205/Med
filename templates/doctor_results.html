@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #3498db;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .header-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .header-link:hover {
+            color: #f0f0f0;
+        }
+
+        .form-container {
+            max-width: 7000px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .results-table th, .results-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .results-table th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tr:hover {
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .result-row {
+            animation: fadeIn 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .result-row:nth-child(1) { animation-delay: 0.1s; }
+        .result-row:nth-child(2) { animation-delay: 0.2s; }
+        .result-row:nth-child(3) { animation-delay: 0.3s; }
+        /* Add more if needed for additional rows */
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><a href="{{ url_for('doctors_availability') }}" class="header-link">Hospital Dashboard</a></h1>
+    </div>
+
+    <div class="form-container">
+        <h2>Hospital And Doctors Info</h2>
+        <p><strong>Location:</strong> {{ location }}</p>
+        {% if hospital %}
+        <p><strong>Hospital:</strong> {{ hospital }}</p>
+        {% endif %}
+
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Hospital Name</th>
+                    <th>Doctor Name</th>
+                    <th>Speciality</th>
+                    <th>Experience</th>
+                    <th>Achievements</th>
+                    <th>Timings</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr class="result-row">
+                    <td>{{ result['Hospital Names'] }}</td>
+                    <td>{{ result['Doctor Name'] }}</td>
+                    <td>{{ result['Speciality'] }}</td>
+                    <td>{{ result['Experience'] }}</td>
+                    <td>{{ result['Achievements'] }}</td>
+                    <td>{{ result['Timings'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ url_for('doctors_availability') }}" class="back-button">Back to Search</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Tests and Scans</title>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+    <style>
+        .back-button {
+            position: relative;
+            top: 50px;
+            left: 650px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <h1><a href="{{ url_for('index') }}" class="header-link">MediTimes</a></h1>
+        </div>
+        <a href="{{ url_for('index') }}" class="back-button">Back to Dashboard</a>
+    </header>
+    <div class="form-container">
+        <form action="{{ url_for('Tests_And_Scanes') }}" method="POST">
+            <div class="form-group">
+                <label for="test_category">Select Test category:</label>
+                <select id="test_category" name="test_category" required>
+                    <option value="">Select Test category</option>
+                    {% for category in test_categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="diagnostic_test">Select Diagnostic test (Optional):</label>
+                <input list="diagnostic_tests" id="diagnostic_test" name="diagnostic_test" placeholder="Type or select diagnostic test" required>
+                <datalist id="diagnostic_tests">
+                    <!-- Options will be dynamically added here -->
+                </datalist>
+            </div>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+    <script id="diagnostic-tests-data" type="application/json">
+        {{ diagnostic_tests | tojson | safe }}
+    </script>
+</body>
+</html>
